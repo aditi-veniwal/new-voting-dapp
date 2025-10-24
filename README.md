@@ -1,11 +1,8 @@
 # Full-Stack Voting-Dapp
 
-To check out Full-Stack Voting-Dapp [Click Here](https://polling-dapp.vercel.app/)
+To check out Full-Stack Voting-Dapp
 
 Build using Ethereum, React.js, Tailwind CSS, The Graph, and ethers.js.
-
-
-[<img width="1440" alt="Screenshot 2023-11-01 at 11 20 50 PM" src="https://github.com/gkirat/Voting-Dapp/assets/103166972/bccd890a-c669-49e6-8db0-8dacd8eaecfc">](https://polling-dapp.vercel.app)
 
 
 ## Table of Contents
@@ -88,28 +85,6 @@ Before you begin, ensure you have met the following requirements:
 
 ## Getting Started
 
-### Installation
-
-To set up and run the project, follow these steps:
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/gkirat/Voting-Dapp.git
-
-2. Change into the project directory:
-   ```bash
-   cd Voting-dapp
-3. Change into the project directory:
-   ```bash
-   cd client
-4. Install the required dependencies for the front end:
-   ```bash
-   npm install
-5. Start the React development server:
-   ```bash
-   npm start
-6. Connect your wallet (MetaMask) to the dApp to participate in elections.
-
 ## Usage
 - Election 
 - Register as a Candidate: If you want to run for a candidate in the elections, you can register as a candidate.
@@ -143,8 +118,5 @@ Contributions are welcome! If you'd like to contribute to this project, please o
 The design was insipred by [iykee Okonkwo](https://www.linkedin.com/in/iykeeokonkwo/) you could see his design on [Here](https://dribbble.com/shots/17547198-Voting-DAPP-Poll-History)
 
 ## Author
-- Name: Gurkirat
-- GitHub: [github.com/gkirat](https://github.com/gkirat)
-
-### License 
-This project is licensed under the terms of the [License](https://github.com/gkirat/Voting-Dapp/blob/master/LICENSE).
+- Name: Aditi
+- GitHub: [github.com/gkirat](https://github.com/aditi-veniwal)
