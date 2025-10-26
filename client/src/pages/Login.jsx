@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 import Abi from "../contracts/Abi.json";
 import { toast } from "sonner";
-import { network } from "../constants";
 
-// ✅ Your deployed contract address
+// Replace with your deployed contract address
 const contractAdd = "0x029e6215943e44E78334a5c7b9804FCC35A31dB0";
 
 const Login = ({ wallet }) => {
@@ -14,39 +13,38 @@ const Login = ({ wallet }) => {
 
   const connectWallet = async () => {
     try {
-      let provider, signer;
-
-      if (window.ethereum) {
-        // ✅ MetaMask
-        provider = new ethers.BrowserProvider(window.ethereum);
-        await provider.send("eth_requestAccounts", []);
-        signer = await provider.getSigner();
-        toast.success("Connected via MetaMask");
-      } else {
-        // ✅ Hardhat Localhost fallback
-        provider = new ethers.JsonRpcProvider(network.rpcUrl);
-        const accounts = await provider.listAccounts();
-        if (!accounts || accounts.length === 0) {
-          toast.error("No accounts found on Hardhat Localhost");
-          return;
-        }
-        signer = provider.getSigner(0);
-        toast.success("Connected to Hardhat Localhost");
+      if (!window.ethereum) {
+        toast.error("Please install MetaMask");
+        return;
       }
 
-      // ✅ Contract instance with signer
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const accounts = await provider.send("eth_requestAccounts", []);
+      if (accounts.length === 0) {
+        toast.error("No accounts found");
+        return;
+      }
+
+      const signer = await provider.getSigner();
+      const signerAddress = await signer.getAddress();
+
+      // ✅ Check network
+      const network = await provider.getNetwork();
+      if (network.chainId !== 11155111) { // Sepolia testnet chainId
+        toast.error("Please switch to Sepolia test network");
+        return;
+      }
+
       const contract = new ethers.Contract(contractAdd, Abi.abi, signer);
 
       setWalletConnected(true);
-
-      // ✅ Pass provider, contract, signerAddress separately (fixed here)
-      const signerAddress = await signer.getAddress();
       wallet(provider, contract, signerAddress);
 
+      toast.success(`Wallet connected: ${signerAddress}`);
       navigate("/Dashboard");
     } catch (error) {
       console.error(error);
-      toast.error(error.message || error.reason || "Wallet connection failed");
+      toast.error(error.message || "Wallet connection failed");
     }
   };
 
@@ -72,6 +70,83 @@ export default Login;
 
 
 
+
+
+//       -------------------------------from here --------------------------------------
+// import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { ethers } from "ethers";
+// import Abi from "../contracts/Abi.json";
+// import { toast } from "sonner";
+// import { network } from "../constants";
+
+// // ✅ Your deployed contract address
+// const contractAdd = "0x029e6215943e44E78334a5c7b9804FCC35A31dB0";
+
+// const Login = ({ wallet }) => {
+//   const [walletConnected, setWalletConnected] = useState(false);
+//   const navigate = useNavigate();
+
+//   const connectWallet = async () => {
+//     try {
+//       let provider, signer;
+
+//       if (window.ethereum) {
+//         // ✅ MetaMask
+//         provider = new ethers.BrowserProvider(window.ethereum);
+//         await provider.send("eth_requestAccounts", []);
+//         signer = await provider.getSigner();
+//         toast.success("Connected via MetaMask");
+//       } else {
+//         // ✅ Hardhat Localhost fallback
+//         provider = new ethers.JsonRpcProvider(network.rpcUrl);
+//         const accounts = await provider.listAccounts();
+//         if (!accounts || accounts.length === 0) {
+//           toast.error("No accounts found on Hardhat Localhost");
+//           return;
+//         }
+//         signer = provider.getSigner(0);
+//         toast.success("Connected to Hardhat Localhost");
+//       }
+
+//       // ✅ Contract instance with signer
+//       const contract = new ethers.Contract(contractAdd, Abi.abi, signer);
+
+//       setWalletConnected(true);
+
+//       // ✅ Pass provider, contract, signerAddress separately (fixed here)
+//       const signerAddress = await signer.getAddress();
+//       wallet(provider, contract, signerAddress);
+
+//       navigate("/Dashboard");
+//     } catch (error) {
+//       console.error(error);
+//       toast.error(error.message || error.reason || "Wallet connection failed");
+//     }
+//   };
+
+//   return (
+//     <div className="flex h-[90%]">
+//       <div className="w-[50%] bg-slate-50 flex justify-center items-center dark:bg-slate-800">
+//         <h1 className="text-[#4263EB] md:text-4xl">Voting Dapp</h1>
+//       </div>
+
+//       <div className="w-[48%] bg-slate-50 flex justify-center items-center dark:bg-slate-800">
+//         <button
+//           className="bg-[#4263EB] p-3 text-white rounded-md hover:bg-[#4e6dec]"
+//           onClick={connectWallet}
+//         >
+//           {walletConnected ? "Connected to Wallet" : "Connect Wallet"}
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+
+// -----------------------------till here -----------------------------------------------
 
 
 // --------------------------------------------------------------

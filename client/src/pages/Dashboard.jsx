@@ -8,9 +8,9 @@ const Dashboard = ({ state }) => {
   const [walletAddress, setWalletAddress] = useState("");
 
   useEffect(() => {
-    if (state && state.contract) {
+    if (state && state.contract && state.signer) {
       setWalletConnected(true);
-      setWalletAddress(state.address);
+      setWalletAddress(state.signer);
       fetchCandidates();
     }
   }, [state]);
@@ -64,6 +64,75 @@ const Dashboard = ({ state }) => {
 export default Dashboard;
 
 
+
+// --------------------------------from here------------------------------------
+
+// import React, { useEffect, useState } from "react";
+// import Navigation from "./Navigation";
+// import { toast } from "sonner";
+
+// const Dashboard = ({ state }) => {
+//   const [candidates, setCandidates] = useState([]);
+//   const [walletConnected, setWalletConnected] = useState(false);
+//   const [walletAddress, setWalletAddress] = useState("");
+
+//   useEffect(() => {
+//     if (state && state.contract) {
+//       setWalletConnected(true);
+//       setWalletAddress(state.address);
+//       fetchCandidates();
+//     }
+//   }, [state]);
+
+//   const fetchCandidates = async () => {
+//     try {
+//       const total = await state.contract.totalCandidates();
+//       const list = [];
+//       for (let i = 0; i < total; i++) {
+//         const candidate = await state.contract.candidates(i);
+//         list.push(candidate);
+//       }
+//       setCandidates(list);
+//     } catch (error) {
+//       console.error(error);
+//       toast.error("Failed to fetch candidates");
+//     }
+//   };
+
+//   return (
+//     <div className="flex h-[100%]">
+//       <Navigation walletConnected={walletConnected} walletAddress={walletAddress} />
+//       <div className="w-[80%] p-10">
+//         <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+//         {!walletConnected ? (
+//           <p className="text-red-500">Please connect your wallet to view dashboard</p>
+//         ) : (
+//           <>
+//             <h2 className="text-xl font-semibold mb-4">Registered Candidates</h2>
+//             <ul className="space-y-3">
+//               {candidates.length > 0 ? (
+//                 candidates.map((c, index) => (
+//                   <li key={index} className="bg-gray-200 dark:bg-gray-800 p-4 rounded-lg">
+//                     <p><strong>Name:</strong> {c.name}</p>
+//                     <p><strong>Party:</strong> {c.party}</p>
+//                     <p><strong>Age:</strong> {c.age}</p>
+//                     <p><strong>Gender:</strong> {c.gender}</p>
+//                   </li>
+//                 ))
+//               ) : (
+//                 <p>No candidates registered yet</p>
+//               )}
+//             </ul>
+//           </>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Dashboard;
+
+// --------------------------------till here------------------------------------
 
 
 

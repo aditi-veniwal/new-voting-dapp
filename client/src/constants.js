@@ -11,3 +11,5 @@ export const network = {
   },
   blockExplorerUrls: [],
 };
+
+export const VOTE_CONTRACT_ADDRESS = "0x029e6215943e44E78334a5c7b9804FCC35A31dB0";
